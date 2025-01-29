@@ -1,7 +1,7 @@
 package repository
 
 import (
-	airticket "test-module/src/AirTicket"
+	airticket "github.com/SokoloSHA/AirTicket"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -12,9 +12,14 @@ type TodoUser interface {
 }
 
 type TodoTicket interface {
+	UpdateTicket(user airticket.Ticket) error
+	DeleteTicket(id int) error
+	GetAll() ([]airticket.Ticket, error)
 }
 
 type TodoDocument interface {
+	UpdateDocument(document airticket.Document) error
+	DeleteDocument(id int) error
 }
 
 type Repository struct {

@@ -8,32 +8,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) getAllUser(c *gin.Context) {
-	//Множество юзеров по конкретному билету
-}
-
-func (h *Handler) updateUser(c *gin.Context) {
-	var input airticket.User
+func (h *Handler) updateDocument(c *gin.Context) {
+	var input airticket.Document
 
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
 	}
 
-	err := h.service.TodoUser.UpdateUser(input)
+	err := h.service.TodoDocument.UpdateDocument(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 }
 
-func (h *Handler) deleteUser(c *gin.Context) {
-	userId, err := strconv.Atoi(c.Param("userId"))
+func (h *Handler) deleteDocument(c *gin.Context) {
+	documentId, err := strconv.Atoi(c.Param("documentId"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
-	err = h.service.TodoUser.DeleteUser(userId)
+	err = h.service.TodoDocument.DeleteDocument(documentId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

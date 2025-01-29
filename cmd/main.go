@@ -1,11 +1,10 @@
 package main
 
 import (
-	airticket "test-module/src/AirTicket"
-	"test-module/src/AirTicket/pkg/handler"
-	"test-module/src/AirTicket/pkg/repository"
-	"test-module/src/AirTicket/pkg/service"
-
+	airticket "github.com/SokoloSHA/AirTicket"
+	"github.com/SokoloSHA/AirTicket/pkg/handler"
+	"github.com/SokoloSHA/AirTicket/pkg/repository"
+	"github.com/SokoloSHA/AirTicket/pkg/service"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -41,5 +40,5 @@ func main() {
 func initConfig() error {
 	viper.AddConfigPath("configs")
 	viper.SetConfigName("config")
-	return viper.ReadConfig()
+	return viper.ReadInConfig()
 }

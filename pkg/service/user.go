@@ -1,8 +1,8 @@
 package service
 
 import (
-	airticket "test-module/src/AirTicket"
-	"test-module/src/AirTicket/pkg/repository"
+	airticket "github.com/SokoloSHA/AirTicket"
+	"github.com/SokoloSHA/AirTicket/pkg/repository"
 )
 
 type UserService struct {

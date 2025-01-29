@@ -1,8 +1,9 @@
 package service
 
 import (
-	airticket "test-module/src/AirTicket"
-	"test-module/src/AirTicket/pkg/repository"
+	airticket "github.com/SokoloSHA/AirTicket"
+
+	"github.com/SokoloSHA/AirTicket/pkg/repository"
 )
 
 type TodoUser interface {
@@ -11,11 +12,14 @@ type TodoUser interface {
 }
 
 type TodoTicket interface {
-	UpdateTicket(user airticket.Ticket) error
-	deleteTicket(id int) error
+	UpdateTicket(ticket airticket.Ticket) error
+	DeleteTicket(id int) error
+	GetAll() ([]airticket.Ticket, error)
 }
 
 type TodoDocument interface {
+	UpdateDocument(document airticket.Document) error
+	DeleteDocument(id int) error
 }
 
 type Service struct {
@@ -26,7 +30,8 @@ type Service struct {
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		TodoUser:   NewUserService(repos.TodoUser),
-		TodoTicket: NewTicketService(repos.TodoTicket),
+		TodoUser:     NewUserService(repos.TodoUser),
+		TodoTicket:   NewTicketService(repos.TodoTicket),
+		TodoDocument: NewDocumentService(repos.TodoDocument),
 	}
 }

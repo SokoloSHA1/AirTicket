@@ -3,8 +3,8 @@ package repository
 import (
 	"fmt"
 	"strings"
-	airticket "test-module/src/AirTicket"
 
+	airticket "github.com/SokoloSHA/AirTicket"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -31,7 +31,7 @@ func (r *UserPostgreSQL) UpdateUser(user airticket.User) error {
 	}
 
 	setQuery := strings.Join(setValues, ", ")
-	query := fmt.Sprintf("UPDATE %s SET %s WHERE Id = %s",
+	query := fmt.Sprintf("UPDATE %s SET %s WHERE Id = %d",
 		usersTable, setQuery, user.Id)
 
 	_, err := r.db.Exec(query)
