@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -13,7 +14,9 @@ type getAllTicketsResponse struct {
 }
 
 func (h *Handler) getAllTicket(c *gin.Context) {
+	fmt.Println("!")
 	tickets, err := h.service.TodoTicket.GetAll()
+
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -43,16 +46,15 @@ func (h *Handler) getAllInfoAboutTicket(c *gin.Context) {
 		return
 	}
 
-	documents, err := h.service.TodoDocument.GetAllDocumentsTicket(users)
+	userDocuments, err := h.service.TodoDocument.GetAllDocumentsTicket(users)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"ticket":    ticket,
-		"users":     users,
-		"documents": documents,
+		"ticket":        ticket,
+		"userDocuments": userDocuments,
 	})
 }
 
@@ -68,6 +70,10 @@ func (h *Handler) updateTicket(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"Status": "ok",
+	})
 }
 
 func (h *Handler) deleteTicket(c *gin.Context) {

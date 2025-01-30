@@ -25,6 +25,28 @@ func (s *DocumentService) DeleteDocument(id int) error {
 	return s.repo.DeleteDocument(id)
 }
 
-func (s *DocumentService) GetAllDocumentsTicket(users []airticket.User) ([]airticket.Document, error) {
-	return s.repo.GetAllDocumentsTicket(users)
+type UserDocuments struct {
+	User      airticket.User
+	Documents []airticket.Document
+}
+
+func (s *DocumentService) GetAllDocumentsTicket(users []airticket.User) ([]UserDocuments, error) {
+	var result []UserDocuments
+
+	for _, user := range users {
+		var documentsForUser UserDocuments
+
+		documents, err := s.repo.GetAllDocumentsTicket(user)
+		if err != nil {
+			return nil, err
+		}
+
+		documentsForUser.User = user
+		documentsForUser.Documents = documents
+
+		result = append(result, documentsForUser)
+
+	}
+
+	return result, nil
 }

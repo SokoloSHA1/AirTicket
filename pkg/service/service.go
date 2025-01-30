@@ -10,7 +10,7 @@ type TodoUser interface {
 	GetAll(ticketId int) ([]airticket.User, error)
 	UpdateUser(user airticket.User) error
 	DeleteUser(id int) error
-	GetReport(report airticket.ReportUser) ([]airticket.Ticket, error)
+	GetReport(report airticket.ReportUser) ([]airticket.Report, error)
 }
 
 type TodoTicket interface {
@@ -24,7 +24,7 @@ type TodoDocument interface {
 	GetAll(userId int) ([]airticket.Document, error)
 	UpdateDocument(document airticket.Document) error
 	DeleteDocument(id int) error
-	GetAllDocumentsTicket(users []airticket.User) ([]airticket.Document, error)
+	GetAllDocumentsTicket(users []airticket.User) ([]UserDocuments, error)
 }
 
 type Service struct {

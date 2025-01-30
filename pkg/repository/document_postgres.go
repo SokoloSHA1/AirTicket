@@ -12,14 +12,14 @@ type DocumentPostgreSQL struct {
 	db *sqlx.DB
 }
 
-func NewDocumentPostgreSQL(db *sqlx.DB) *UserPostgreSQL {
-	return &UserPostgreSQL{db: db}
+func NewDocumentPostgreSQL(db *sqlx.DB) *DocumentPostgreSQL {
+	return &DocumentPostgreSQL{db: db}
 }
 
 func (r *DocumentPostgreSQL) GetAll(userId int) ([]airticket.Document, error) {
 	var documents []airticket.Document
 
-	query := fmt.Sprintf("SELECT * FROM %s WHERE userId = %d",
+	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = %d",
 		documentTable, userId)
 	err := r.db.Select(&documents, query)
 
@@ -29,17 +29,17 @@ func (r *DocumentPostgreSQL) GetAll(userId int) ([]airticket.Document, error) {
 func (r *DocumentPostgreSQL) UpdateDocument(document airticket.Document) error {
 	setValues := make([]string, 0)
 	if document.TypeDocument != "" {
-		setValues = append(setValues, fmt.Sprintf("TypeDocument = %s", document.TypeDocument))
+		setValues = append(setValues, fmt.Sprintf("type_document = '%s'", document.TypeDocument))
 	}
 
-	if document.Number != 0 {
-		setValues = append(setValues, fmt.Sprintf("Number = %d", document.Number))
+	if document.Number != "" {
+		setValues = append(setValues, fmt.Sprintf("number = '%s'", document.Number))
 	}
 
 	setQuery := strings.Join(setValues, ", ")
 	query := fmt.Sprintf("UPDATE %s SET %s WHERE Id = %d",
 		documentTable, setQuery, document.Id)
-
+	fmt.Println(query)
 	_, err := r.db.Exec(query)
 
 	return err
@@ -52,20 +52,15 @@ func (r *DocumentPostgreSQL) DeleteDocument(id int) error {
 	return err
 }
 
-func (r *DocumentPostgreSQL) GetAllDocumentsTicket(users []airticket.User) ([]airticket.Document, error) {
-	var allDocuments []airticket.Document
+func (r *DocumentPostgreSQL) GetAllDocumentsTicket(user airticket.User) ([]airticket.Document, error) {
 
-	for _, user := range users {
-		var documents []airticket.Document
+	var documents []airticket.Document
 
-		query := fmt.Sprintf("SELECT * FROM %s WHERE UserId = %d", documentTable, user.Id)
-		err := r.db.Select(&documents, query)
-		if err != nil {
-			return nil, err
-		}
-
-		allDocuments = append(allDocuments, documents...)
+	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = %d", documentTable, user.Id)
+	err := r.db.Select(&documents, query)
+	if err != nil {
+		return nil, err
 	}
 
-	return allDocuments, nil
+	return documents, nil
 }

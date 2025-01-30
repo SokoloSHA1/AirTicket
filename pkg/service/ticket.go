@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	airticket "github.com/SokoloSHA/AirTicket"
 	"github.com/SokoloSHA/AirTicket/pkg/repository"
 )
@@ -14,6 +16,7 @@ func NewTicketService(repo repository.TodoTicket) *TicketService {
 }
 
 func (s *TicketService) GetAll() ([]airticket.Ticket, error) {
+	fmt.Println("1")
 	return s.repo.GetAll()
 }
 

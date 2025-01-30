@@ -1,8 +1,9 @@
 port: "8000"
 
 db:
-  user: "postgres"
-  password: "12345qwerty"
-  dbname: "AirTickets"
-  port: "5432"
-  sslmode: "disable"
+ username: "postgres"
+ password: "qwerty"
+ host: "localhost"
+ port: "5436"
+ dbname: "postgres"
+ sslmode: "disable"

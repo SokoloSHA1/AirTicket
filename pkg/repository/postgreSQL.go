@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	User     string
+	Host     string
+	Username string
 	Password string
 	DBName   string
 	Port     string
@@ -16,14 +17,15 @@ type Config struct {
 }
 
 const (
-	usersTable    = "User"
-	ticketsTable  = "Ticket"
-	documentTable = "Document"
+	usersTable       = "Users"
+	ticketsTable     = "Tickets"
+	documentTable    = "Documents"
+	ticketUsersTable = "TicketUsers"
 )
 
 func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
-	db, err := sqlx.Open("postgres", fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s",
-		cfg.User, cfg.Password, cfg.DBName, cfg.SSLmode))
+	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
+		cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLmode))
 	if err != nil {
 		return nil, err
 	}

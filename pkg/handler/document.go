@@ -38,6 +38,10 @@ func (h *Handler) updateDocument(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"Status": "ok",
+	})
 }
 
 func (h *Handler) deleteDocument(c *gin.Context) {

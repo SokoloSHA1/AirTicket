@@ -17,8 +17,8 @@ func NewTicketPostgreSQL(db *sqlx.DB) *TicketPostgreSQL {
 }
 
 func (r *TicketPostgreSQL) GetAll() ([]airticket.Ticket, error) {
+	fmt.Println("!")
 	var tickets []airticket.Ticket
-
 	query := fmt.Sprintf("SELECT * FROM %s", ticketsTable)
 
 	err := r.db.Select(&tickets, query)
@@ -29,37 +29,38 @@ func (r *TicketPostgreSQL) GetAll() ([]airticket.Ticket, error) {
 func (r *TicketPostgreSQL) UpdateTicket(ticket airticket.Ticket) error {
 	setValues := make([]string, 0)
 	if ticket.PointStart != "" {
-		setValues = append(setValues, fmt.Sprintf("PointStart = %s", ticket.PointStart))
+		setValues = append(setValues, fmt.Sprintf("point_start='%s'", ticket.PointStart))
 	}
 
 	if ticket.PointEnd != "" {
-		setValues = append(setValues, fmt.Sprintf("PointEnd = %s", ticket.PointEnd))
+		setValues = append(setValues, fmt.Sprintf("point_end='%s'", ticket.PointEnd))
 	}
 
-	if ticket.OrderNumber != 0 {
-		setValues = append(setValues, fmt.Sprintf("OrderNumber = %d", ticket.OrderNumber))
+	if ticket.OrderNumber != "" {
+		setValues = append(setValues, fmt.Sprintf("order_number='%s'", ticket.OrderNumber))
 	}
 
 	if ticket.ServiceProvider != "" {
-		setValues = append(setValues, fmt.Sprintf("ServiceProvider = %s", ticket.ServiceProvider))
+		setValues = append(setValues, fmt.Sprintf("service_provider='%s'", ticket.ServiceProvider))
 	}
 
 	if ticket.DateStart != "" {
-		setValues = append(setValues, fmt.Sprintf("DateStart = %s", ticket.DateStart))
+		setValues = append(setValues, fmt.Sprintf("date_start='%s'", ticket.DateStart))
 	}
 
 	if ticket.DateFinish != "" {
-		setValues = append(setValues, fmt.Sprintf("DateFinish = %s", ticket.DateFinish))
+		setValues = append(setValues, fmt.Sprintf("date_finish='%s'", ticket.DateFinish))
 	}
 
 	if ticket.CreatedAt != "" {
-		setValues = append(setValues, fmt.Sprintf("CreatedAt = %s", ticket.CreatedAt))
+		setValues = append(setValues, fmt.Sprintf("created_at='%s'", ticket.CreatedAt))
 	}
 
 	setQuery := strings.Join(setValues, ", ")
 	query := fmt.Sprintf("UPDATE %s SET %s WHERE Id = %d",
 		ticketsTable, setQuery, ticket.Id)
 
+	fmt.Println(query)
 	_, err := r.db.Exec(query)
 
 	return err
@@ -77,7 +78,7 @@ func (r *TicketPostgreSQL) GetTicket(ticketId int) (airticket.Ticket, error) {
 
 	query := fmt.Sprintf("SELECT * FROM %s WHERE Id = %d", ticketsTable, ticketId)
 
-	err := r.db.Select(&ticket, query)
-
+	err := r.db.Get(&ticket, query)
+	fmt.Println(err)
 	return ticket, err
 }

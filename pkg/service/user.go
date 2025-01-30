@@ -25,6 +25,6 @@ func (s *UserService) DeleteUser(id int) error {
 	return s.repo.DeleteUser(id)
 }
 
-func (s *UserService) GetReport(report airticket.ReportUser) ([]airticket.Ticket, error) {
+func (s *UserService) GetReport(report airticket.ReportUser) ([]airticket.Report, error) {
 	return s.repo.GetReport(report)
 }
