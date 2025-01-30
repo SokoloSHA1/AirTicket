@@ -38,6 +38,10 @@ func (h *Handler) updateUser(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"Status": "ok",
+	})
 }
 
 func (h *Handler) deleteUser(c *gin.Context) {
@@ -55,5 +59,23 @@ func (h *Handler) deleteUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"Status": "ok",
+	})
+}
+
+func (h *Handler) reportUser(c *gin.Context) {
+	var input airticket.ReportUser
+
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
+	}
+
+	report, err := h.service.TodoUser.GetReport(input)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"report": report,
 	})
 }

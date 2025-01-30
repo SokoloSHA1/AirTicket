@@ -24,3 +24,7 @@ func (s *UserService) UpdateUser(user airticket.User) error {
 func (s *UserService) DeleteUser(id int) error {
 	return s.repo.DeleteUser(id)
 }
+
+func (s *UserService) GetReport(report airticket.ReportUser) ([]airticket.Ticket, error) {
+	return s.repo.GetReport(report)
+}

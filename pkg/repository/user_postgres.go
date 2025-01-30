@@ -19,7 +19,7 @@ func NewUserPostgreSQL(db *sqlx.DB) *UserPostgreSQL {
 func (r *UserPostgreSQL) GetAll(ticketId int) ([]airticket.User, error) {
 	var users []airticket.User
 
-	query := fmt.Sprintf("SELECT * FROM %s WHERE ticketId = %d",
+	query := fmt.Sprintf("SELECT Id, FirstName, LastName, MiddleName FROM %s us INNER JOIN %s tu WHERE tu.ticketId = %d",
 		usersTable, ticketId)
 	err := r.db.Select(&users, query)
 
@@ -54,4 +54,9 @@ func (r *UserPostgreSQL) DeleteUser(id int) error {
 	_, err := r.db.Exec(query)
 
 	return err
+}
+
+func (r *UserPostgreSQL) GetReport(report airticket.ReportUser) ([]airticket.Ticket, error) {
+	//TODO: Получение данный для отчета
+	return nil, nil
 }

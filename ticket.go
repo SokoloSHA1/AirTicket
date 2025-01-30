@@ -10,3 +10,10 @@ type Ticket struct {
 	DateFinish      string `json:"dateFinish" db:"dateFinish"`
 	CreatedAt       string `json:"createdAt" db:"createdAt"`
 }
+
+type TicketUser struct {
+	Id       int  `db:"id"`
+	TicketId int  `db:"ticketId"`
+	UserId   int  `db:"userId"`
+	Done     bool `db:"done"`
+}

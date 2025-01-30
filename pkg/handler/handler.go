@@ -18,6 +18,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	user := router.Group("/user")
 	{
+		user.GET("/report", h.reportUser)
 		user.GET("/:ticketId", h.getAllUser)
 		user.POST("/update", h.updateUser)
 		user.DELETE("/:userId", h.deleteUser)
@@ -37,8 +38,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		document.POST("/update", h.updateDocument)
 		document.DELETE("/:documentId", h.deleteDocument)
 	}
-
-	router.GET("/getAll")
 
 	return router
 }

@@ -10,6 +10,7 @@ type TodoUser interface {
 	GetAll(ticketId int) ([]airticket.User, error)
 	UpdateUser(user airticket.User) error
 	DeleteUser(id int) error
+	GetReport(report airticket.ReportUser) ([]airticket.Ticket, error)
 }
 
 type TodoTicket interface {

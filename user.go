@@ -5,5 +5,10 @@ type User struct {
 	FirstName  string `json:"firstName" db:"firstName"`
 	LastName   string `json:"lastName" db:"lastName"`
 	MiddleName string `json:"middleName" db:"middleName"`
-	TicketId   int    `db:"ticketId"`
+}
+
+type ReportUser struct {
+	UserId     string `json:"userId"`
+	DateFrom   string `json:"dateFrom"`
+	DateBefore string `json:"dateBefore"`
 }
