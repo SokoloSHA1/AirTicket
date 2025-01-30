@@ -24,3 +24,7 @@ func (s *TicketService) UpdateTicket(ticket airticket.Ticket) error {
 func (s *TicketService) DeleteTicket(id int) error {
 	return s.repo.DeleteTicket(id)
 }
+
+func (s *TicketService) GetTicket(ticketId int) (airticket.Ticket, error) {
+	return s.repo.GetTicket(ticketId)
+}

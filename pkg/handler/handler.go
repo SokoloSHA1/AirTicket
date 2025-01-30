@@ -26,15 +26,19 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	ticket := router.Group("ticket")
 	{
 		ticket.GET("/", h.getAllTicket)
+		ticket.GET("/:ticketId", h.getAllInfoAboutTicket)
 		ticket.POST("/update", h.updateTicket)
 		ticket.DELETE("/:ticketId", h.deleteTicket)
 	}
 
 	document := router.Group("/document")
 	{
+		document.GET("/:userId", h.getAllDocument)
 		document.POST("/update", h.updateDocument)
 		document.DELETE("/:documentId", h.deleteDocument)
 	}
+
+	router.GET("/getAll")
 
 	return router
 }

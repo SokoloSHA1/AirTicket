@@ -1,7 +1,8 @@
 package airticket
 
 type Document struct {
-	Id           int
-	TypeDocument string `json:"typeDocument"`
-	Number       int    `json:"number"`
+	Id           int    `db:"id"`
+	TypeDocument string `json:"typeDocument" db:"typeDocument"`
+	Number       int    `json:"number" db:"number"`
+	UserId       int    `db:"userId"`
 }

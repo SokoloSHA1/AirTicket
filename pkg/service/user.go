@@ -13,6 +13,10 @@ func NewUserService(repo repository.TodoUser) *UserService {
 	return &UserService{repo: repo}
 }
 
+func (s *UserService) GetAll(ticketId int) ([]airticket.User, error) {
+	return s.repo.GetAll(ticketId)
+}
+
 func (s *UserService) UpdateUser(user airticket.User) error {
 	return s.repo.UpdateUser(user)
 }

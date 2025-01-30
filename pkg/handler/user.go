@@ -9,7 +9,21 @@ import (
 )
 
 func (h *Handler) getAllUser(c *gin.Context) {
-	//Множество юзеров по конкретному билету
+	ticketId, err := strconv.Atoi(c.Param("ticketId"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		return
+	}
+
+	users, err := h.service.TodoUser.GetAll(ticketId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"users": users,
+	})
 }
 
 func (h *Handler) updateUser(c *gin.Context) {

@@ -71,3 +71,13 @@ func (r *TicketPostgreSQL) DeleteTicket(id int) error {
 
 	return err
 }
+
+func (r *TicketPostgreSQL) GetTicket(ticketId int) (airticket.Ticket, error) {
+	var ticket airticket.Ticket
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE Id = %d", ticketsTable, ticketId)
+
+	err := r.db.Select(&ticket, query)
+
+	return ticket, err
+}

@@ -16,6 +16,16 @@ func NewUserPostgreSQL(db *sqlx.DB) *UserPostgreSQL {
 	return &UserPostgreSQL{db: db}
 }
 
+func (r *UserPostgreSQL) GetAll(ticketId int) ([]airticket.User, error) {
+	var users []airticket.User
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE ticketId = %d",
+		usersTable, ticketId)
+	err := r.db.Select(&users, query)
+
+	return users, err
+}
+
 func (r *UserPostgreSQL) UpdateUser(user airticket.User) error {
 	setValues := make([]string, 0)
 	if user.FirstName != "" {
