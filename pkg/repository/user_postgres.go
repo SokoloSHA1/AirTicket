@@ -62,7 +62,6 @@ func (r *UserPostgreSQL) GetReport(report airticket.ReportUser) ([]airticket.Rep
 	query := fmt.Sprintf("SELECT ti.created_at, ti.date_start, ti.order_number, ti.point_start, ti.point_end, tu.done FROM %s ti INNER JOIN %s tu on ti.id = tu.ticket_id WHERE tu.user_id = %d AND ti.date_start >= '%s' AND ti.date_finish <= '%s' AND ti.created_at < '%s'",
 		ticketsTable, ticketUsersTable, report.UserId, report.DateFrom, report.DateBefore, report.DateFrom)
 	err := r.db.Select(&tickets, query)
-	fmt.Println(query)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +71,6 @@ func (r *UserPostgreSQL) GetReport(report airticket.ReportUser) ([]airticket.Rep
 	query = fmt.Sprintf("SELECT ti.created_at, ti.date_start, ti.order_number, ti.point_start, ti.point_end, tu.done FROM %s ti INNER JOIN %s tu on ti.id = tu.ticket_id WHERE tu.user_id = %d AND ti.created_at >= '%s' AND ti.created_at <= '%s'",
 		ticketsTable, ticketUsersTable, report.UserId, report.DateFrom, report.DateBefore)
 	err = r.db.Select(&tickets, query)
-	fmt.Println(query)
 	if err != nil {
 		return nil, err
 	}

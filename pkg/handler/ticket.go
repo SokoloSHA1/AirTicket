@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -14,7 +13,6 @@ type getAllTicketsResponse struct {
 }
 
 func (h *Handler) getAllTicket(c *gin.Context) {
-	fmt.Println("!")
 	tickets, err := h.service.TodoTicket.GetAll()
 
 	if err != nil {

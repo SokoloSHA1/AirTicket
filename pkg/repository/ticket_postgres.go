@@ -17,7 +17,6 @@ func NewTicketPostgreSQL(db *sqlx.DB) *TicketPostgreSQL {
 }
 
 func (r *TicketPostgreSQL) GetAll() ([]airticket.Ticket, error) {
-	fmt.Println("!")
 	var tickets []airticket.Ticket
 	query := fmt.Sprintf("SELECT * FROM %s", ticketsTable)
 
@@ -60,7 +59,6 @@ func (r *TicketPostgreSQL) UpdateTicket(ticket airticket.Ticket) error {
 	query := fmt.Sprintf("UPDATE %s SET %s WHERE Id = %d",
 		ticketsTable, setQuery, ticket.Id)
 
-	fmt.Println(query)
 	_, err := r.db.Exec(query)
 
 	return err
@@ -79,6 +77,6 @@ func (r *TicketPostgreSQL) GetTicket(ticketId int) (airticket.Ticket, error) {
 	query := fmt.Sprintf("SELECT * FROM %s WHERE Id = %d", ticketsTable, ticketId)
 
 	err := r.db.Get(&ticket, query)
-	fmt.Println(err)
+
 	return ticket, err
 }
